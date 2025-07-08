@@ -1,0 +1,89 @@
+{
+  "contacts": {
+    "purchase_button_link": "https://t.me",
+    "contact_link": "https://t.me"
+  },
+  "services": {
+    "defense": {
+      "title": "DEF",
+      "icon": "🛡️",
+      "levels": [
+        {
+          "name": {
+            "en": "1 week",
+            "ru": "1 неделя"
+          },
+          "price": 15
+        },
+        {
+          "name": {
+            "en": "2 weeks",
+            "ru": "2 недели"
+          },
+          "price": 25
+        },
+        {
+          "name": {
+            "en": "1 month",
+            "ru": "1 месяц"
+          },
+          "price": 50
+        }
+      ]
+    }
+  },
+  "texts": {
+    "navigation": {
+      "services": {
+        "en": "Services",
+        "ru": "Услуги"
+      },
+      "about": {
+        "en": "About",
+        "ru": "Обо мне"
+      },
+      "contact": {
+        "en": "Contact",
+        "ru": "Контакты"
+      }
+    },
+    "sections": {
+      "services": {
+        "en": "Services",
+        "ru": "Услуги"
+      },
+      "about": {
+        "en": "About",
+        "ru": "Обо мне"
+      },
+      "contact": {
+        "en": "Contact",
+        "ru": "Контакты"
+      }
+    },
+    "about_content": {
+      "en": "OSINT specialist",
+      "ru": "Специалист в сфере OSINT"
+    },
+    "contact_content": {
+      "secure_channels": {
+        "en": "Communication only through secure channels",
+        "ru": "Связь только через защищенные каналы"
+      },
+      "telegram_label": {
+        "en": "Telegram: ",
+        "ru": "Телеграмм: "
+      }
+    },
+    "buttons": {
+      "purchase": {
+        "en": "Purchase",
+        "ru": "Приобрести"
+      }
+    }
+  },
+  "currency": {
+    "symbol": "⭐",
+    "name": "stars"
+  }
+}

@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OPSEC</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <nav class="container">
+            <div class="logo">OPSEC</div>
+            <ul class="nav-links">
+                <li><a href="#services" data-en="Services" data-ru="Услуги">Services</a></li>
+                <li><a href="#about" data-en="About" data-ru="Обо мне">About</a></li>
+                <li><a href="#contact" data-en="Contact" data-ru="Контакты">Contact</a></li>
+                <li><button id="lang-toggle" class="lang-btn">RU</button></li>
+            </ul>
+            <button id="mobile-lang-toggle" class="lang-btn mobile-lang-btn">RU</button>
+        </nav>
+    </header>
+
+    <section id="services" class="section">
+        <div class="container">
+            <h2 class="section-title" data-en="Services" data-ru="Услуги">Services</h2>
+            
+            <div class="services">
+                <div class="service-card">
+                    <div class="service-icon">🛡️</div>
+                    <h3 class="service-title">DEF</h3>
+                    <div class="service-levels">
+                        <div class="level">
+                            <div class="level-name" data-en="1 week" data-ru="1 неделя">1 week</div>
+                            <div class="level-price def-price">15⭐</div>
+                        </div>
+                        <div class="level">
+                            <div class="level-name" data-en="2 weeks" data-ru="2 недели">2 weeks</div>
+                            <div class="level-price def-price">25⭐</div>
+                        </div>
+                        <div class="level">
+                            <div class="level-name" data-en="1 month" data-ru="1 месяц">1 month</div>
+                            <div class="level-price def-price">50⭐</div>
+                        </div>
+                    </div>
+                    <div class="purchase-area">
+                        <a href="https://t.me/opsecbin" class="purchase-btn" data-en="Purchase" data-ru="Приобрести">Purchase</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="about" class="section">
+        <div class="container">
+            <h2 class="section-title" data-en="About" data-ru="Обо мне">About</h2>
+            <div class="about-content">
+                <p data-en="OSINT specialist" data-ru="Специалист в сфере OSINT">OSINT specialist</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="section">
+        <div class="container">
+            <h2 class="section-title" data-en="Contact" data-ru="Контакты">Contact</h2>
+            <div class="contact-content">
+                <p><span data-en="Telegram: " data-ru="Телеграмм: ">Telegram: </span><a href="https://t.me/opsecbin" class="contact-link">https://t.me/opsecbin</a></p>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        let currentLang = 'en';
+        let config = {};
+        
+        async function loadConfig() {
+            try {
+                const response = await fetch('./config.json');
+                config = await response.json();
+                initializePage();
+            } catch (error) {
+                console.error('Error loading config:', error);
+                initializePage();
+            }
+        }
+        
+        function initializePage() {
+            updateTexts();
+            updatePrices();
+            updateContacts();
+            const langText = currentLang === 'en' ? 'RU' : 'EN';
+            document.getElementById('lang-toggle').textContent = langText;
+            document.getElementById('mobile-lang-toggle').textContent = langText;
+        }
+        
+        function toggleLanguage() {
+            currentLang = currentLang === 'en' ? 'ru' : 'en';
+            updateTexts();
+            updatePrices();
+            updateContacts();
+            const langText = currentLang === 'en' ? 'RU' : 'EN';
+            document.getElementById('lang-toggle').textContent = langText;
+            document.getElementById('mobile-lang-toggle').textContent = langText;
+        }
+        
+        function updateTexts() {
+            const elements = document.querySelectorAll('[data-en][data-ru]');
+            elements.forEach(element => {
+                element.textContent = element.getAttribute('data-' + currentLang);
+            });
+        }
+        
+        function updatePrices() {
+            if (!config.services) return;
+            
+            const defPrices = document.querySelectorAll('.def-price');
+            if (config.services.defense && defPrices.length > 0) {
+                config.services.defense.levels.forEach((level, index) => {
+                    if (defPrices[index]) {
+                        defPrices[index].textContent = level.price + config.currency.symbol;
+                    }
+                });
+            }
+        }
+        
+        function updateContacts() {
+            if (!config.contacts) return;
+
+            if (config.contacts.contact_link) {
+                const contactLinks = document.querySelectorAll('.contact-link');
+                contactLinks.forEach(link => {
+                    link.href = config.contacts.contact_link;
+                    link.textContent = config.contacts.contact_link;
+                });
+            }
+            
+            if (config.contacts.purchase_button_link) {
+                const purchaseButtons = document.querySelectorAll('.purchase-btn');
+                purchaseButtons.forEach(button => {
+                    button.href = config.contacts.purchase_button_link;
+                });
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            loadConfig();
+            
+            document.getElementById('lang-toggle').addEventListener('click', toggleLanguage);
+            document.getElementById('mobile-lang-toggle').addEventListener('click', toggleLanguage);
+            
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    document.querySelector(this.getAttribute('href')).scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                });
+            });
+        });
+    </script>
+    
+
+</body>
+</html>
